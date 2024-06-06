@@ -1,0 +1,96 @@
+Entities: 
+User
+Admin
+Movie
+City
+Show
+Movie Theatre / Cinema
+Movie Theatre Hall / Cinema Hall
+Seat
+Booking
+Payment
+
+Data class User (
+	val id: BigInt,
+	val mobileNumber: String
+)
+
+Data class Admin (
+	val id: BigInt,
+	val mobileNumber: String
+)
+
+Data class Movie (
+	val id: BigInt,
+	val name: String,
+	val releaseDate: Timestamp
+)
+
+Data class City (
+	val id: BigInt,
+	val state: String
+)
+
+Data class Seat (
+	val id: BigInt,
+	val row: Int,
+	val col: Int,
+	val price: Int,
+	val isBooked: Boolean
+)
+
+Data class Show (
+	val id: BigInt,
+	val movie: Movie,
+	val startTime: Timestamp,
+	val endTime: Timestamp,
+	val movieTheatreHall: MovieTheatreHall
+)
+
+Data class MovieTheatreHall (
+	val id: BigInt,
+	val hallNumber: Int,
+	val shows: List<Show>,
+)
+
+Data class MovieTheatre (
+	val id: BigInt,
+	val halls: List<MovieTheatreHall>,
+	val city: City
+)
+
+Open class Booking (
+	val id: BigInt,
+	val user: User,
+	val seats: List<Seat>,
+	val show: Show,
+	val status: BookingStatus
+)
+
+Class Ticket (
+	id: BigInt,
+	user: User,
+	val seats: List<Seat>,
+	val show: Show,
+	val status: BookingStatus
+	val ticketNumber: String,
+	val barcode: String
+) : Booking (id, user, seats, show, status) {
+	fun validateTicket() {
+		
+	}
+}
+
+Data class Payment (
+	val id: BigInt,
+	val bookingId: Int,
+	val userId: Int
+	val paymentMode: PaymentMode
+	val timestamp: Timestamp,
+	val amount: Double,
+	val transactionId: String
+)
+
+Enum class BookingStatus {
+	Confirmed, Cancelled
+}
